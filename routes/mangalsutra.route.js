@@ -15,7 +15,8 @@ mangalsutraRouter.get("/", async (req, res) => {
 
 mangalsutraRouter.post("/add", async (req, res) => {
     try {
-        const mangalsutra = await new MangalsutraModel(req.body)
+        const mangalsutra = new MangalsutraModel(req.body)
+        await mangalsutra.save()
         res.status(200).send({ "msg": "new data added successfully!", "data": mangalsutra })
     } catch (err) {
         res.status(400).send({ "err": err.message })

@@ -16,7 +16,8 @@ braceletRouter.get("/", async (req, res) => {
 
 braceletRouter.post("/add", async (req, res) => {
     try {
-        const bracelet = await new BraceletModel(req.body)
+        const bracelet = new BraceletModel(req.body)
+        await bracelet.save()
         res.status(200).send({ "msg": "new data added successfully!", "data": bracelet })
     } catch (err) {
         res.status(400).send({ "err": err.message })
