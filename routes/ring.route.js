@@ -16,7 +16,7 @@ ringRouter.get("/", async (req, res) => {
 
 ringRouter.post("/add", async (req, res) => {
     try {
-        const ring = await new RingModel()
+        const ring = await new RingModel(req.body)
         res.status(200).send({ "msg": "new data added successfully!", "data": ring })
     } catch (err) {
         res.status(400).send({ "err": err.message })
