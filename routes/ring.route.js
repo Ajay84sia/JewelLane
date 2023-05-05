@@ -40,7 +40,7 @@ ringRouter.patch("/update/:ringID", async (req, res) => {
 ringRouter.delete("/delete/:ringID", async (req, res) => {
     const { ringID } = req.params;
     try {
-        await RingModel.findByIdAndUpdate({ _id: ringID })
+        await RingModel.findByIdAndDelete({ _id: ringID })
         res.status(200).send(`The product with id:${ringID} has been deleted`)
 
     } catch (err) {

@@ -40,7 +40,7 @@ braceletRouter.patch("/update/:braceletID", async (req, res) => {
 braceletRouter.delete("/delete/:braceletID", async (req, res) => {
     const { braceletID } = req.params;
     try {
-        await BraceletModel.findByIdAndUpdate({ _id: braceletID })
+        await BraceletModel.findByIdAndDelete({ _id: braceletID })
         res.status(200).send(`The product with id:${braceletID} has been deleted`)
 
     } catch (err) {
