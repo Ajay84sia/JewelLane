@@ -24,8 +24,6 @@ adminRouter.post("/register", async (req, res) => {
 
 })
 
-adminRouter.use(adminauth)
-
 adminRouter.post("/login", async (req, res) => {
     //Logic
     const { email, password } = req.body
@@ -50,7 +48,36 @@ adminRouter.post("/login", async (req, res) => {
     }
 })
 
+adminRouter.use(adminauth)
 
+adminRouter.get("/", async (req, res) => {
+    try {
+        if (req.body.adminType == "admin") {
+            const admin = await AdminModel.find()
+            res.status(200).send(admin)
+        } else {
+            res.status(200).send({ "msg": "You are not authorized to perform this action" })
+        }
+    } catch (err) {
+        res.status(400).send({ "err": err.message })
+    }
+})
+
+
+adminRouter.delete("/delete/:adminID", async (req, res) => {
+    const { adminID } = req.params;
+    try {
+        if (req.body.adminType !== "admin") {
+            res.status(200).send({ "msg": "You are not authorized to perform this action" })
+        } else {
+            await AdminModel.findByIdAndDelete({ _id: adminID })
+            res.status(200).send(`The admin with id:${adminID} has been deleted`)
+        }
+    } catch (err) {
+        res.status(400).send(err)
+    }
+
+})
 
 
 
