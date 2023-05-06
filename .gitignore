@@ -1,4 +1,5 @@
 .env
-db.json
+earrings.json
+ring.json
 db2.json
 node_modules/
