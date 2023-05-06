@@ -1,5 +1,6 @@
 const express = require('express');
 const { AdminModel } = require("../model/admin.model")
+const { UserModel } = require("../model/user.model")
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { adminauth } = require('../middleware/adminauth.middleware');
@@ -55,6 +56,19 @@ adminRouter.get("/", async (req, res) => {
         if (req.body.adminType == "admin") {
             const admin = await AdminModel.find()
             res.status(200).send(admin)
+        } else {
+            res.status(200).send({ "msg": "You are not authorized to perform this action" })
+        }
+    } catch (err) {
+        res.status(400).send({ "err": err.message })
+    }
+})
+
+adminRouter.get("/users", async (req, res) => {
+    try {
+        if (req.body.adminType == "admin") {
+            const users = await UserModel.find()
+            res.status(200).send(users)
         } else {
             res.status(200).send({ "msg": "You are not authorized to perform this action" })
         }
