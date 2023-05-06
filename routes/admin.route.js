@@ -8,12 +8,12 @@ const adminRouter = express.Router()
 
 adminRouter.post("/register", async (req, res) => {
     //Logic
-    const { name, email, password, type } = req.body
+    const { name, email, image, password, type } = req.body
 
     try {
         bcrypt.hash(password, 5, async (err, hash) => {
             // Store hash in your password DB.
-            const user = new AdminModel({ name, email, type, password: hash })
+            const user = new AdminModel({ name, email, image, type, password: hash })
             await user.save()
             res.status(200).send({ "msg": "New user has been registered" })
         });
@@ -30,7 +30,7 @@ adminRouter.post("/login", async (req, res) => {
     //Logic
     const { email, password } = req.body
     try {
-        const user = await AdminModel   .findOne({ email })
+        const user = await AdminModel.findOne({ email })
         if (user) {
             bcrypt.compare(password, user.password, (err, result) => {
                 // result == true
