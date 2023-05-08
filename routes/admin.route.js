@@ -78,6 +78,20 @@ adminRouter.get("/users", async (req, res) => {
 })
 
 
+adminRouter.delete("users/delete/:userID", async (req, res) => {
+    const { userID } = req.params;
+    try {
+        if (req.body.adminType !== "admin") {
+            res.status(200).send({ "msg": "You are not authorized to perform this action" })
+        } else {
+            await UserModel.findByIdAndDelete({ _id: userID })
+            res.status(200).send(`The user with id:${userID} has been deleted`)
+        }
+    } catch (err) {
+        res.status(400).send(err)
+    }
+
+})
 adminRouter.delete("/delete/:adminID", async (req, res) => {
     const { adminID } = req.params;
     try {
