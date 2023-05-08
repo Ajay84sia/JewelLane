@@ -78,7 +78,7 @@ adminRouter.get("/users", async (req, res) => {
 })
 
 
-adminRouter.delete("users/delete/:userID", async (req, res) => {
+adminRouter.delete("/users/delete/:userID", async (req, res) => {
     const { userID } = req.params;
     try {
         if (req.body.adminType !== "admin") {
